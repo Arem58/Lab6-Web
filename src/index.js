@@ -1,7 +1,11 @@
-import hola from './lib' 
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './Memoria.jsx'
 
-const yaharo = document.createElement('h1')
 
-yaharo.append(hola('renato'))
+ReactDOM.render(
 
-document.body.append(yaharo)
+  <App />,
+
+    document.getElementById("root")
+)
