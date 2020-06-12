@@ -5,7 +5,7 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <link rel="stylesheet" href="styles.css">
-</head>  
+   </head>  
   <body class="bodyBackground">
     <div id="root"></div>
     <script type="text/babel">
@@ -79,7 +79,8 @@
             const Hola = {
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
+            color: "white"
         }
 
         const ejemplo = {
@@ -104,15 +105,15 @@
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            background: "green",
             height: "700px",
             width: "700px",
+            flexDirection: "column"
         }
           return (
             <div style={style}>
                 <div style = {hola2}> 
                     <div ><h1 style = {Hola}> Memoria </h1></div>
-                    <div ><h2>Moviminetos: {this.state.contador}</h2></div>
+                    <div ><h2 style ={Hola}>Moviminetos: {this.state.contador}</h2></div>
                 </div>
                 <div style={hello} className="memory-game">
                     <div id = "Par1A" onClick={this.flipCard.bind(this, "Par1A")} className = "memory-card" style= {Hola} data-card = "pareja1">
