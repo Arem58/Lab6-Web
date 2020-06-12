@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>  
+  <body class="bodyBackground">
+    <div id="root"></div>
+    <script type="text/babel">
+        let carta1
+        let carta2
+        let cartaId
+        class App extends React.Component {
+            constructor(props) {
+            super(props);
+            this.state = {
+                contador: 0,
+                hasFlippedCard: false,
+                disableCards: false,
+                win: 0,
+                repetCard: 0,
+            }
+        }
+        componentDidMount(){
+            const cards = document.querySelectorAll('.memory-card')
+            cards.forEach(card =>{
+                let randomPos = Math.floor(Math.random() * 15)
+                card.style.order = randomPos
+            })
+        }   
+        flipCard(carta){
+            var seleccionado = document.getElementById(carta)
+            if(!this.state.disableCards && seleccionado.dataset.card != " " && this.state.repetCard != carta){
+                seleccionado.classList.toggle('flip')
+                if (!this.state.hasFlippedCard){
+                    //primera carta que voltea
+                    this.setState({hasFlippedCard: true})
+                    cartaId = carta
+                    carta1 = seleccionado
+                    console.log(carta1)
+                    this.setState({repetCard: carta})
+                }else{
+                    if(cartaId == carta) return
+                    this.setState({hasFlippedCard: false})
+                    carta2 = seleccionado
+                    this.setState({disableCards: true})
+                    if(carta1.dataset.card === carta2.dataset.card ){
+                        carta1.dataset.card = " "
+                        carta2.dataset.card = " "
+                        this.setState({disableCards: false})
+                        this.setState({win: this.state.win + 1})
+                        this.setState({contador: this.state.contador + 1})
+                        console.log(this.state.contador)
+                        console.log(this.state.win)
+                        this.setState({repetCard: 0})
+                        this.winwin()
+                    }else{
+                        setTimeout(() => {
+                            carta1.classList.remove('flip')
+                            carta2.classList.remove('flip')
+                            this.setState({disableCards: false})
+                            this.setState({contador: this.state.contador + 1})
+                            console.log(this.state.contador)
+                        }, 1500)
+                    }
+                }
+            }
+        }
+        winwin(){
+            if(this.state.win == 7){
+                alert("Win win win")
+            }    
+        }
+            
+        
+        render(){
+            const Hola = {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+        }
+
+        const ejemplo = {
+            width: "130px",
+            height: "180px",
+            position: "absolute"
+        }
+
+        const hello = {
+            display: "grid",
+            gridTemplateColumns: "auto auto auto auto",
+            height: "100%",
+            width:  "100%",
+            gridRowGap: "130px",
+            gridColumnGap: "100px",
+        }
+        const hola2 = {
+            textAlign: "center",
+        }
+
+        const style = {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            background: "green",
+            height: "700px",
+            width: "700px",
+        }
+          return (
+            <div style={style}>
+                <div style = {hola2}> 
+                    <div ><h1 style = {Hola}> Memoria </h1></div>
+                    <div ><h2>Moviminetos: {this.state.contador}</h2></div>
+                </div>
+                <div style={hello} className="memory-game">
+                    <div id = "Par1A" onClick={this.flipCard.bind(this, "Par1A")} className = "memory-card" style= {Hola} data-card = "pareja1">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986" alt = "Pareja1" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/924/2D__57497.1440113502.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par1B" onClick={this.flipCard.bind(this, "Par1B")} className = "memory-card" style= {Hola} data-card = "pareja1">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986" alt = "Pareja1" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/924/2D__57497.1440113502.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par2A" onClick={this.flipCard.bind(this, "Par2A")} className = "memory-card" style= {Hola} data-card = "pareja2">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986" alt = "Pareja2" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/925/3C__99122.1440113509.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par2B" onClick={this.flipCard.bind(this, "Par2B")} className = "memory-card" style= {Hola} data-card = "pareja2">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986" alt = "Pareja2" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/925/3C__99122.1440113509.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par3A" onClick={this.flipCard.bind(this, "Par3A")} className = "memory-card" style= {Hola} data-card = "pareja3">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 "  alt = "Pareja3" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/926/4H__83243.1440113515.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par3B" onClick={this.flipCard.bind(this, "Par3B")} className = "memory-card" style= {Hola} data-card = "pareja3">
+                        <img className = "front" src = " https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986"  alt = "Pareja3" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/926/4H__83243.1440113515.1280.1280.png?c=2" alt = "JSatras"style = {ejemplo} ></img>
+                    </div> 
+                    <div id = "Par4A" onClick={this.flipCard.bind(this, "Par4A")} className = "memory-card" style= {Hola} data-card = "pareja4">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 " alt = "Pareja4" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/927/5S__90574.1440113521.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par4B" onClick={this.flipCard.bind(this, "Par4B")} className = "memory-card" style= {Hola} data-card = "pareja4">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 " alt = "Pareja4" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/927/5S__90574.1440113521.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par5A" onClick={this.flipCard.bind(this, "Par5A")} className = "memory-card" style= {Hola} data-card = "pareja5">
+                        <img className = "front" src = " https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986" alt = "Pareja5" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/935/AS__68652.1440113599.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par5B" onClick={this.flipCard.bind(this, "Par5B")} className = "memory-card" style= {Hola} data-card = "pareja5">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 " alt = "Pareja5" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/935/AS__68652.1440113599.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par6A" onClick={this.flipCard.bind(this, "Par6A")} className = "memory-card" style= {Hola} data-card = "pareja6">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 " alt = "Pareja6" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/928/6D__92916.1440113530.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par6B" onClick={this.flipCard.bind(this, "Par6B")} className = "memory-card" style= {Hola} data-card = "pareja6">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 " alt = "Pareja6" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/928/6D__92916.1440113530.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par7A" onClick={this.flipCard.bind(this, "Par7A")} className = "memory-card" style= {Hola} data-card = "pareja7">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 " alt = "Pareja7" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/929/7C__93490.1440113539.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par7B" onClick={this.flipCard.bind(this, "Par7B")} className = "memory-card" style= {Hola} data-card = "pareja7">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 " alt = "Pareja7" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/929/7C__93490.1440113539.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par8A" onClick={this.flipCard.bind(this, "Par8A")} className = "memory-card" style= {Hola} data-card = "pareja8">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 " alt = "Pareja8" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/930/8S__27839.1440113555.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                    <div id = "Par8B" onClick={this.flipCard.bind(this, "Par8B")} className = "memory-card" style= {Hola} data-card = "pareja8">
+                        <img className = "front" src = "https://cdn.shopify.com/s/files/1/0200/7616/products/playing-cards-tally-ho-circle-back-2.png?v=1575351986 " alt = "Pareja8" style = {ejemplo}></img>
+                        <img className = "back" src = "https://cdn2.bigcommerce.com/n-d57o0b/1kujmu/products/297/images/930/8S__27839.1440113555.1280.1280.png?c=2" alt = "JSatras" style = {ejemplo}></img>
+                    </div>
+                </div>
+            </div>
+          )
+        }
+      }
+      
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+.memory-card.flip{
+    transform: rotateY(180deg);
+}
+.memory-card {
+    transform-style: preserve-3d;
+    transition: .5s;
+}
+.memory-game{
+    perspective: 1000px;
+}
+
+.front,
+.back{
+  border-radius: 5px;
+  backface-visibility: hidden;
+}
+
+.back {
+    transform: rotateY(180deg);
+}
